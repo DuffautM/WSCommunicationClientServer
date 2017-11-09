@@ -160,7 +160,7 @@ public class ClientWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				String message = input_Box.getText();
-				notifyEvent("onMessageSent", message);
+				notifyEvent("onMessageSend", message);
 				input_Box.setText("");
 				
 			}

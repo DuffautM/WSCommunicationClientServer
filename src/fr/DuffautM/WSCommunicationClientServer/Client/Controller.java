@@ -1,5 +1,8 @@
 package fr.DuffautM.WSCommunicationClientServer.Client;
 
+import java.io.IOException;
+import java.net.Socket;
+
 public class Controller implements IModelListener, IViewListener{
 
 	private Model model;
@@ -53,7 +56,12 @@ public class Controller implements IModelListener, IViewListener{
 	@Override
 	public void onMessageSend(String message) {
 
-		
+		try {
+			Socket sock = new Socket("127.0.0.1", 500);
+		} catch (IOException e) {
+			System.out.println("[Client] - Impossible to connect");
+			e.printStackTrace();
+		}
 		
 	}
 
