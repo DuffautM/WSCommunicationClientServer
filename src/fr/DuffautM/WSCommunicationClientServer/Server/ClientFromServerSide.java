@@ -13,6 +13,7 @@ public class ClientFromServerSide implements Runnable {
 	private BufferedReader in;
 	private Server parent;
 	private Thread thread;
+	private String nickname = "Anonymous";
 
 	public ClientFromServerSide(Server parent, Socket socket) throws IOException 
 	{
@@ -84,7 +85,6 @@ public class ClientFromServerSide implements Runnable {
 				
 				parent.onClientMessage(this, read);
 				
-				write("ECHO -> " + read);
 			}
 			catch (IOException e) 
 			{
@@ -94,6 +94,11 @@ public class ClientFromServerSide implements Runnable {
 		}
 		
 		
+	}
+
+	public String getNickname() {
+		// TODO Auto-generated method stub
+		return this.nickname ;
 	}
 	
 	

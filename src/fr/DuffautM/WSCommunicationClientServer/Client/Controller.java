@@ -45,7 +45,7 @@ public class Controller implements IModelListener, IViewListener{
 	@Override
 	public void onMessageReceived(String nickname, String ip, String message) {
 
-		//view.messageBox.setText(nickname + " - " + message);
+		//view.messageBox.setText(message);
 		
 	}
 
