@@ -1,6 +1,9 @@
 package fr.DuffautM.WSCommunicationClientServer.Client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Controller implements IModelListener, IViewListener{
@@ -42,14 +45,14 @@ public class Controller implements IModelListener, IViewListener{
 	@Override
 	public void onMessageReceived(String nickname, String ip, String message) {
 
-		//view.messageBox.setText(view.input_Box.getText() + "\n" + message);
+		//view.messageBox.setText(nickname + " - " + message);
 		
 	}
 
 	@Override
 	public void onNicknameChanged(String nickname) {
 
-		
+		System.out.println("kek");
 		
 	}
 
@@ -57,8 +60,20 @@ public class Controller implements IModelListener, IViewListener{
 	public void onMessageSend(String message) {
 
 		try {
+			//Open connection
 			Socket sock = new Socket("127.0.0.1", 500);
-		} catch (IOException e) {
+			//Write message
+			PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
+			out.println(message);
+			//Receive message
+			BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+			String rcvd = in.readLine();
+			System.out.println("[Client] - " + rcvd);
+			out.close();
+			sock.close();
+		} 
+		catch (IOException e) 
+		{
 			System.out.println("[Client] - Impossible to connect");
 			e.printStackTrace();
 		}

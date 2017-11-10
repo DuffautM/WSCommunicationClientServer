@@ -28,6 +28,16 @@ public class Server implements Runnable {
 		this.connectedUsers = new ArrayList<>();
 		
 	}
+	
+	public void onClientDisconnection(ClientFromServerSide client)
+	{
+		System.out.println("[Server] - Client " + client.getSocket().getInetAddress() + " has been disconnected");
+	}
+	
+	public void onClientMessage(ClientFromServerSide client, String message)
+	{
+		System.out.println("[Server][" + socket.getInetAddress() +"] Received message : " + message);
+	}
 
 	@Override
 	public void run() {
@@ -38,8 +48,9 @@ public class Server implements Runnable {
 			{
 				Socket s = socket.accept();
 				System.out.println("[Server] - Server available - Connection from " + s.getInetAddress());
-				ClientFromServerSide c = new ClientFromServerSide(s);
-				connectedUsers.add(c);
+				ClientFromServerSide c = new ClientFromServerSide(this, s);
+				c.startPollingThread();
+				this.connectedUsers.add(c);
 			} 
 			catch (IOException e) 
 			{

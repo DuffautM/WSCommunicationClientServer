@@ -7,10 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+
+import sun.awt.RequestFocusController;
+import sun.awt.CausedFocusEvent.Cause;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.CardLayout;
+import java.awt.Component;
+
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -43,7 +49,7 @@ public class ClientWindow extends JFrame {
 	private JPanel bottom_input_panel;
 	private JScrollPane scrollPane;
 	protected JTextArea messageBox;
-	protected JTextField input_Box;
+	public JTextField input_Box;
 	protected JTextField txtNickname;
 	
 	private List<IViewListener> listeners;
@@ -150,7 +156,6 @@ public class ClientWindow extends JFrame {
 		JList users_list = new JList();
 		scrollPane_1.setViewportView(users_list);
 		left_display_panel.setLayout(gl_left_display_panel);
-		
 		input_Box = new JTextField();
 		input_Box.setColumns(10);
 		
@@ -167,6 +172,17 @@ public class ClientWindow extends JFrame {
 		});
 		
 		JButton send_button = new JButton("Send");
+		send_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String message = input_Box.getText();
+				notifyEvent("onMessageSend", message);
+				input_Box.setText("");
+				
+			}
+		});
 		GroupLayout gl_bottom_input_panel = new GroupLayout(bottom_input_panel);
 		gl_bottom_input_panel.setHorizontalGroup(
 			gl_bottom_input_panel.createParallelGroup(Alignment.LEADING)

@@ -24,6 +24,7 @@ public class Main {
 				Model model = new Model();
 				Controller controller = new Controller(model, view);
 				view.setVisible(true);
+				view.input_Box.requestFocusInWindow();
 
 			}
 		});
