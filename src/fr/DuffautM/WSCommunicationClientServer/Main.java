@@ -30,3 +30,11 @@ public class Main {
 		});
 	}
 }
+
+/*
+ * TODO
+ * Server to client display
+ * Logger
+ * Cypher
+ * */
+ 

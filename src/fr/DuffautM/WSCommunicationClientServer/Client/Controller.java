@@ -64,11 +64,14 @@ public class Controller implements IModelListener, IViewListener{
 			Socket sock = new Socket("127.0.0.1", 500);
 			//Write message
 			PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
-			out.println(message);
+			//out.println(message);
 			//Receive message
 			BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+			
+			out.println("NCK;Anon");
+			out.println("MSG;" + message);
 			String rcvd = in.readLine();
-			System.out.println("[Client] - " + rcvd);
+			//out.println("[Client] - " + rcvd);
 			out.close();
 			sock.close();
 		} 

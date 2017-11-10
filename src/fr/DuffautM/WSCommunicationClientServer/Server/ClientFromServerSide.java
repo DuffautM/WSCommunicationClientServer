@@ -83,7 +83,7 @@ public class ClientFromServerSide implements Runnable {
 					return;
 				}
 				
-				parent.onClientMessage(this, read);
+				parent.onClientRawDataReceived(this, read);
 				
 			}
 			catch (IOException e) 
@@ -99,6 +99,11 @@ public class ClientFromServerSide implements Runnable {
 	public String getNickname() {
 		// TODO Auto-generated method stub
 		return this.nickname ;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+		
 	}
 	
 	
