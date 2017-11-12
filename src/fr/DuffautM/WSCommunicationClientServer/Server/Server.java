@@ -1,6 +1,11 @@
 package fr.DuffautM.WSCommunicationClientServer.Server;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -12,6 +17,8 @@ public class Server implements Runnable {
 	private ServerSocket socket;
 	private Thread acceptThread;
 	private List<ClientFromServerSide> connectedUsers;
+	
+	BufferedWriter writer;
 	
 	public Server(int port)
 	{
@@ -41,10 +48,15 @@ public class Server implements Runnable {
 		}
 	}
 	
-	public void onClientRawDataReceived(ClientFromServerSide client, String message)
+	public void onClientRawDataReceived(ClientFromServerSide client, String message) throws IOException
 	{
 		System.out.println("[Server][" + socket.getInetAddress() +"] Received data : " + message);
 		//Send message to all
+		
+		writer = new BufferedWriter(new FileWriter("log.txt"));
+			
+		writer.append(message);
+		writer.close();
 		
 		if(message.length() < 3)
 		{

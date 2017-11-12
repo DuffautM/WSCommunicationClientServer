@@ -11,6 +11,13 @@ public class Controller implements IModelListener, IViewListener{
 	private Model model;
 	private ClientWindow view;
 	
+	Socket sock;
+	PrintWriter out;
+	BufferedReader in;
+	Thread TGestionConnection;
+	
+	String rcvd = null;
+	
 	public Controller(Model model, ClientWindow view) {
 
 		this.model = model;
@@ -19,6 +26,37 @@ public class Controller implements IModelListener, IViewListener{
 		model.addListeners(this);
 		view.addListeners(this);
 		
+	}
+	
+	public void openConnection()
+	{
+		try 
+		{
+			//Open connection
+			sock = new Socket("127.0.0.1", 500);
+			
+			Thread TGestionConnection = new Thread(new GestionDiscussion(sock));
+			TGestionConnection.start();
+			
+
+		} 
+		catch (IOException e) 
+		{
+
+		}
+		
+	}
+	
+	public void closeConnection()
+	{
+		try 
+		{
+			sock.close();
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -46,7 +84,24 @@ public class Controller implements IModelListener, IViewListener{
 	public void onMessageReceived(String nickname, String ip, String message) {
 
 		//view.messageBox.setText(message);
+
+		openConnection();
 		
+		try 
+		{
+			rcvd = in.readLine();
+			view.messageBox.append(rcvd);
+		} 
+		catch (IOException e) 
+		{
+
+			e.printStackTrace();
+		}
+			
+		
+		
+		closeConnection();
+
 	}
 
 	@Override
@@ -58,6 +113,13 @@ public class Controller implements IModelListener, IViewListener{
 
 	@Override
 	public void onMessageSend(String message) {
+		
+		openConnection();
+		
+		
+		
+		
+		
 
 		try {
 			//Open connection
@@ -67,8 +129,7 @@ public class Controller implements IModelListener, IViewListener{
 			//out.println(message);
 			//Receive message
 			BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			
-			out.println("NCK;Anon");
+
 			out.println("MSG;" + message);
 			String rcvd = in.readLine();
 			//out.println("[Client] - " + rcvd);

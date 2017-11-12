@@ -48,7 +48,7 @@ public class ClientWindow extends JFrame {
 	private JPanel left_display_panel;
 	private JPanel bottom_input_panel;
 	private JScrollPane scrollPane;
-	protected JTextArea messageBox;
+	public JTextArea messageBox;
 	public JTextField input_Box;
 	protected JTextField txtNickname;
 	

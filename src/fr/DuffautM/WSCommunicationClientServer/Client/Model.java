@@ -86,10 +86,10 @@ public class Model {
 				break;
 			}
 		}
-		 if(methodCall == null)
-		 {
-			 throw new IllegalArgumentException("Event " + methodName + " doesn't exist");
-		 }
+		if(methodCall == null)
+		{
+			throw new IllegalArgumentException("Event " + methodName + " doesn't exist");
+		}
 		
 		
 		for(IModelListener listener : this.listeners)
